@@ -2,8 +2,17 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom';
 import coverImg from '../assets/cover-bg.png';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { getTest } from '../services/api.js';
 
 export default function CoverScreen() {
+  const [msg, setMsg] = useState('');
+
+  useEffect(() => {
+    getTest()
+      .then(res => setMsg(res.data.message))
+      .catch(err => console.error(err));
+  }, []);
   const nav = useNavigate();
   const areas = ['Scheduling', 'For_Future(Provisions)', 'For_Future(Maintenance)', 'For_Future(Inventory)'];
   const logout = () => {
