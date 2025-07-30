@@ -5,4 +5,4 @@ const API = axios.create({
 });
 
 export const getTest = () => API.get('/api/test');
-export const login = (form) => API.post('/api/login', form);
+export const login = (form) => API.post('api/login', form);
