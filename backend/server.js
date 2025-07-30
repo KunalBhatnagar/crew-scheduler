@@ -12,9 +12,14 @@ const {
 
 const app = express();
 app.use(cors({
-  origin: 'https://crew-scheduler-pearl.vercel.app', // ✅ your frontend domain
+  origin: process.env.FRONTEND_URL, // ✅ your frontend domain
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+}));
+app.options('*', cors({
+  origin: process.env.FRONTEND_URL,
+  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
+  allowedHeaders: ['Content-Type','Authorization']
 }));
 app.use(express.json());
 
@@ -66,7 +71,7 @@ app.use('/api/crew', authMiddleware, requireManager);
 app.use('/api/schedule', authMiddleware);
 
 // Health check
-app.get('/', (req, res) => res.send('API is up 🚀'));
+
 
 // --- Crew CRUD ---
 
