@@ -1,6 +1,8 @@
 // src/services/scheduleService.js
 import axios from 'axios';
-const API_URL = '/api/schedule';
+const API_URL = axios.create({
+  baseURL: import.meta.env.VITE_API_URL, // ✅ must use import.meta.env in Vite
+});
 
 
 function normalizeDate(date) {
