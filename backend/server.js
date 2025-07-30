@@ -11,7 +11,11 @@ const {
 } = process.env;
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: 'https://crew-scheduler-pearl.vercel.app', // ✅ your frontend domain
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}));
 app.use(express.json());
 
 // --- Authentication & Authorization ---
@@ -54,6 +58,8 @@ function requireManager(req, res, next) {
   }
   next();
 }
+app.get('/', (req, res) => res.send('API is running 🚀'));
+
 
 // protect crew routes (managers only) and schedule routes (any authenticated)
 app.use('/api/crew', authMiddleware, requireManager);
