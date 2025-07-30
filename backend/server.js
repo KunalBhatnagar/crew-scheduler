@@ -71,7 +71,7 @@ app.use('/api/crew', authMiddleware, requireManager);
 app.use('/api/schedule', authMiddleware);
 
 // Health check
-
+app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 
 // --- Crew CRUD ---
 
