@@ -11,16 +11,7 @@ const {
 } = process.env;
 
 const app = express();
-app.use(cors({
-  origin: process.env.FRONTEND_URL || "*", // ✅ your frontend domain
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}));
-app.options('*', cors({
-  origin: process.env.FRONTEND_URL,
-  methods: ['GET','POST','PUT','DELETE','OPTIONS'],
-  allowedHeaders: ['Content-Type','Authorization']
-}));
+app.use(cors());
 app.use(express.json());
 
 // --- Authentication & Authorization ---
@@ -63,7 +54,7 @@ function requireManager(req, res, next) {
   }
   next();
 }
-app.get('/', (req, res) => res.send('API is running 🚀'));
+
 
 
 // protect crew routes (managers only) and schedule routes (any authenticated)
@@ -71,7 +62,7 @@ app.use('/api/crew', authMiddleware, requireManager);
 app.use('/api/schedule', authMiddleware);
 
 // Health check
-app.get('/favicon.ico', (req, res) => res.sendStatus(204));
+app.get('/', (req, res) => res.send('API is up 🚀'));
 
 // --- Crew CRUD ---
 
