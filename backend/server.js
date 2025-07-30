@@ -66,6 +66,21 @@ app.get('/', (req, res) => res.send('API is up 🚀'));
 
 // --- Crew CRUD ---
 
+app.get('/api/_tables', async (req, res) => {
+  try {
+    const { rows } = await pool.query(`
+      SELECT table_name
+        FROM information_schema.tables
+       WHERE table_schema = 'public'
+         AND table_type   = 'BASE TABLE';
+    `);
+    res.json(rows.map(r => r.table_name));
+  } catch (err) {
+    console.error('Error listing tables:', err);
+    res.status(500).json({ error: err.message });
+  }
+});
+
 app.get('/api/crew', async (req, res) => {
   try {
     const result = await pool.query(`
